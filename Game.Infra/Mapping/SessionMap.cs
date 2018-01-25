@@ -16,5 +16,6 @@ namespace Game.Infra.Mapping
             HasRequired(x => x.User);
 
         }
+        
     }
 }

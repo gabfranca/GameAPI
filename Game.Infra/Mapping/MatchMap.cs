@@ -12,7 +12,7 @@ namespace Game.Infra.Mapping
             HasKey(x => x.Id);
             Property(x => x.Id).IsRequired();
             Property(x => x.NumbOfPlayers).IsRequired();
-            Property(x => x.Token).IsRequired();
+            Property(x => x.Token).HasMaxLength(5);
             Property(x => x.CategoryId).IsRequired();
 
             HasRequired(x => x.Category);

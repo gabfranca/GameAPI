@@ -24,7 +24,7 @@ namespace gameAPI.Controllers
         [Route("Matches")]
         public HttpResponseMessage GetMatches()
         {
-            var result = db.ChallengeQuestions.ToList();
+            var result = db.Matches.ToList();
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
@@ -32,7 +32,10 @@ namespace gameAPI.Controllers
         [Route("Matches/{Id}")]
         public HttpResponseMessage GetMatchesById(int Id)
         {
-            var result = db.Matches.Where(x => x.Id == Id).ToList();
+            var result = (from m in db.Matches
+                          join mu in db.Match_Users
+                          on m.Id equals mu.MatchId
+                          where mu.MatchId.Equals(Id) select mu ).ToList();
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
@@ -117,9 +120,9 @@ namespace gameAPI.Controllers
 
         [HttpDelete]
         [Route("Matches")]
-        public HttpResponseMessage DeleteMacth(int token)
+        public HttpResponseMessage DeleteMacth(string token)
         {
-            if (token <= 0)
+            if ( token == string.Empty)
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
 
             try
