@@ -25,7 +25,8 @@ namespace Game.Infra.DataContext
 
         public IDbSet<BonusQuestion> BonusQuestions { get; set; }
 
-        public IDbSet<Match> Match { get; set; }
+        public IDbSet<Match> Matches { get; set; }
+
 
         public IDbSet<Match_User> Match_Users { get; set; }
 
@@ -74,7 +75,11 @@ namespace Game.Infra.DataContext
                 context.Users.Add(new User { Id = 2, Name = "User 01", Email = "gabriel@outlook.com.br", Nickname = "user1", Password = "111111" });
                 context.Users.Add(new User { Id = 3, Name = "User 02", Email = "gabriel@outlook.com.br", Nickname = "user2", Password = "111111" });
 
-               
+
+                context.Matches.Add( new Match
+                {
+
+                });
 
                 context.ChallengeQuestions.Add(new ChallengeQuestion
                 {
@@ -119,5 +124,6 @@ namespace Game.Infra.DataContext
 
             }
         }
+
     }
 }
