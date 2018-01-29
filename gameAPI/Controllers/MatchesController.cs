@@ -11,6 +11,8 @@ using System.Web.Http.Description;
 using Game.Domain;
 using Game.Infra.DataContext;
 using System.Web.Http.Cors;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace gameAPI.Controllers
 {
@@ -48,25 +50,32 @@ namespace gameAPI.Controllers
 
 
         [HttpPost]
-        [Route("Matches")]
-        public HttpResponseMessage PostMatch(Match obj)
+        [Route("Matches/New")]
+        public HttpResponseMessage PostNewMatch(MatchContract obj)
         {
             if (obj == null)
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
+                    return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
 
             try
             {
-                db.Matches.Add(obj);
-                db.SaveChanges();
+               
                 var result = obj;
+                string token = MD5Hash(obj.Match.Id.ToString() + obj.Match_User.UserId.ToString());
+                obj.Match.Token = token.Substring(0,5).ToUpper(); 
+                db.Matches.Add(obj.Match);
+                db.SaveChanges();
+                obj.Match_User.MatchId = obj.Match.Id;
+                obj.Match_User.Token = obj.Match.Token;
+                db.Match_Users.Add(obj.Match_User);
+                db.SaveChanges();
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }
-            catch (Exception)
+            catch (Exception e)
             {
 
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Falha ao criar nova Partida.");
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Falha ao criar nova Partida. n/"+e.Message);
 
             }
         }
@@ -151,6 +160,19 @@ namespace gameAPI.Controllers
         private bool ChallengeQuestionExists(int id)
         {
             return db.ChallengeQuestions.Count(e => e.Id == id) > 0;
+
+        }
+        public static string MD5Hash(string input)
+        {
+            StringBuilder hash = new StringBuilder();
+            MD5CryptoServiceProvider md5provider = new MD5CryptoServiceProvider();
+            byte[] bytes = md5provider.ComputeHash(new UTF8Encoding().GetBytes(input));
+
+            for (int i = 0; i < bytes.Length; i++)
+            {
+                hash.Append(bytes[i].ToString("x2"));
+            }
+            return hash.ToString();
         }
     }
 }

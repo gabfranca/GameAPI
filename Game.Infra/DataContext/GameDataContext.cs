@@ -10,7 +10,7 @@ namespace Game.Infra.DataContext
         public GameDataContext() : base("GameConnectionString")
         {
              Database.SetInitializer<GameDataContext>(new GameDataConextInitializer());
-          //  Configuration.LazyLoadingEnabled = false;
+          // Configuration.LazyLoadingEnabled = false;
             //Configuration.ProxyCreationEnabled = false;
         }
 
@@ -80,9 +80,9 @@ namespace Game.Infra.DataContext
 
                 context.Matches.Add(new Match { Id = 1, CategoryId = 2,  NumbOfPlayers = 3, Token = "ABCDE" });
 
-                context.Match_Users.Add(new Match_User {Id =1 , MatchId = 1, UserId = 1, Pontuation = 500,BoardPosition = 0 });
-                context.Match_Users.Add(new Match_User { Id = 2, MatchId = 1, UserId = 2, Pontuation = 500, BoardPosition = 0 });
-                context.Match_Users.Add(new Match_User { Id = 3, MatchId = 1, UserId = 3, Pontuation = 500, BoardPosition = 0 });
+                context.Match_Users.Add(new Match_User {Id =1 , MatchId = 1, UserId = 1, Pontuation = 500,BoardPosition = 0, Token = "AAAAA" });
+                context.Match_Users.Add(new Match_User { Id = 2, MatchId = 1, UserId = 2, Pontuation = 500, BoardPosition = 0, Token = "AAAAA" });
+                context.Match_Users.Add(new Match_User { Id = 3, MatchId = 1, UserId = 3, Pontuation = 500, BoardPosition = 0 , Token = "AAAAA" });
 
                 context.ChallengeQuestions.Add(new ChallengeQuestion
                 {

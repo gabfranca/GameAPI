@@ -15,6 +15,7 @@ namespace Game.Infra.Mapping
             Property(x => x.Password).HasMaxLength(10).IsRequired();
 
 
+
         }
     }
 }

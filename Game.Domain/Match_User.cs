@@ -13,7 +13,7 @@ namespace Game.Domain
         public int UserId { get; set; }
         public int Pontuation { get; set; }
         public int BoardPosition { get; set; }
-
+        public string Token { get; set; }
         public virtual User User { get; set; }
         public virtual Match Match { get; set; }
 

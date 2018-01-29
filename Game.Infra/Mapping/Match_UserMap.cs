@@ -7,10 +7,11 @@ namespace Game.Infra.Mapping
     {
         public Match_UserMap()
         {
-            ToTable("Match_UserMap");
+            ToTable("Match_User");
             HasKey(x => x.Id);
             Property(x => x.Pontuation).IsRequired();
-   
+            Property(x => x.Token).HasMaxLength(5).IsRequired();
+
 
             HasRequired(x => x.Match);
             HasRequired(x => x.User);
